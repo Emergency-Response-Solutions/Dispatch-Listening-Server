@@ -13,7 +13,7 @@ const schedule = require('node-schedule');
 
 var dateformat = require('date-fns/format');
 var today = new Date();
-today = dateformat(today, 'YYMMDD HH:mm');
+today = dateformat(today, 'MM-DD-YYYY HH:mm:ss');
 
 const EPASSWD = process.env.EPASSWD;
 
@@ -40,14 +40,15 @@ const sendNotificationEmail = (email, text) => {
  */
 const startDummyCalls = () => {
   var rule = new schedule.RecurrenceRule();
-  rule.hour = 12;
-  rule.minute = 35;
+  rule.hour = 16;
+  rule.minute = 10;
 
   schedule.scheduleJob(rule, function() {
     const tableName = '/gfdDispatches/';
     var randomCallNumber = Math.floor(Math.random() * data.maindata.length + 1);
     var dummyCall = data.maindata[randomCallNumber];
-    dummyCall.timeout = today;
+    dummyCall.rec_dt = today;
+    dummyCall.cfs_remark = 'TEST CALL: ' + dummyCall.cfs_remark;
 
     var options = {
       method: 'POST',

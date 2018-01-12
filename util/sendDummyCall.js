@@ -10,11 +10,12 @@ const request = require('request');
 
 var dateformat = require('date-fns/format');
 var today = new Date();
-today = dateformat(today, 'YYMMDD HH:mm');
+today = dateformat(today, 'MM-DD-YYYY HH:mm:ss');
 
 var randomCallNumber = Math.floor(Math.random() * data.maindata.length + 1);
 var dummyCall = data.maindata[randomCallNumber];
-dummyCall.timeout = today;
+dummyCall.rec_dt = today;
+dummyCall.cfs_remark = 'TEST CALL: ' + dummyCall.cfs_remark;
 
 const sendDummyCall = () => {
   var options = {
